@@ -1,107 +1,138 @@
 # Integrating With HubSpot I: Foundations — Study Projects Practicum
 
-A Node.js/Express app that demonstrates GET and POST calls to HubSpot's custom-object API and renders data using Pug. Based on the [HubSpot Academy starter repository](https://github.com/HubSpot-Academy/integrating-with-hubspot-i-foundations-practicum).
+A Node.js application built for the **HubSpot Academy Integrating With HubSpot I: Foundations Practicum**. It uses Express, Axios, and Pug to make HubSpot CRM API requests and display, create, and update records for a custom object named **Study Projects**.
 
-> **Grading notice:** This is a reference implementation, not evidence that the practicum has been personally completed. HubSpot requires original work and reviews real development commit history. Before submitting, review and adapt the code, work on a `working-branch`, run the application against your own developer test account, and merge your verified changes into `main`.
+The project was developed from the [official HubSpot Academy starter repository](https://github.com/HubSpot-Academy/integrating-with-hubspot-i-foundations-practicum).
 
-## REQUIRED: test account and list view link
+## HubSpot Developer Test Account
 
-**Developer test-account custom-object URL:** https://app.hubspot.com/contacts/247795564/objects/2-270751630/views/all/list
+**Study Projects custom-object list:**
 
-Replace `NOT CONFIGURED` **after creating the real object in your HubSpot developer test account** with the exact link copied from that account. The expected form is:
+https://app.hubspot.com/contacts/247795564/objects/2-270751630/views/all/list
 
-`https://app.hubspot.com/contacts/<test-account-id>/objects/<custom-object-id>/views/all/list`
+| Detail | Value |
+|---|---|
+| Test account | Foundations Practicum Test |
+| Test account ID | 247795564 |
+| Custom object | Study Projects |
+| Object type ID | 2-270751630 |
+| Authentication | HubSpot Service Key (stored locally) |
 
-**Never include your private app token or Service Key in the repository.**
-
-## Exact Academy routes and templates
-
-| Route | Template | Function |
-| --- | --- | --- |
-| `GET /` | `views/homepage.pug` | Uses Axios and the CRM objects GET API to read all four custom property values and display them in a table. Includes **Add to this table** link. |
-| `GET /update-cobj` | `views/updates.pug` | Shows the form and the exact title **Update Custom Object Form | Integrating With HubSpot I Practicum**. Includes **Return to the homepage** link. |
-| `POST /update-cobj` | Redirect | Sends form data to HubSpot to create a custom-object record; redirects to `/` after success. |
-
-Additional optional routes for updating existing records are included; these do not replace the three mandatory routes.
-
-### Custom object
-
-- **Object:** Study Projects (`study_projects`)
-- **Name** (`name`) — string, text, required; exactly labeled **Name**.
-- **Category** (`project_category`) — string, text, required.
-- **Status** (`project_status`) — string, text.
-- **Notes** (`project_notes`) — string, textarea.
-- **Associated object type:** contacts (`CONTACT`) — defined in the schema.
-- **Records:** at least three genuine HubSpot test-account records. `npm run seed` can create three examples; verify they actually exist in HubSpot before submission.
-
-## Developer test-account setup (do this yourself)
-
-1. Create a **developer test account** rather than using a production portal. Set up the scoped authentication credential within that account, named `YourFirstName's Practicum Private App` if the legacy private-app flow is available. Grant all six read/write scopes requested in the assignment:
-   - `crm.schemas.custom.read` and `crm.schemas.custom.write`
-   - `crm.objects.custom.read` and `crm.objects.custom.write`
-   - `crm.objects.contacts.read` and `crm.objects.contacts.write`
-2. **HubSpot changed authentication in 2026:** creation of legacy private apps is unavailable for accounts created on or after 2026-09-28, and scheduled to be disabled for older accounts on 2026-10-26. If your account does not offer private-app creation, use **Settings → Integrations → Service Keys** with equivalent scopes and explain that limitation if Academy asks. Existing private app tokens continue working. [HubSpot official announcement](https://developers.hubspot.com/changelog/legacy-private-app-creation-sunset). Do not invent a private app or fake the required credential.
-3. Create a local `.env` from `.env.example` and put the real credential **only in `.env`**, never GitHub.
-4. `npm install` (dependencies: axios, dotenv, express, pug).
-5. `npm run setup:schema` creates or discovers the Study Projects schema, with **Name** and CONTACT association. If your test portal does not allow custom objects, the Academy instructions allow standard CRM objects, but this code uses custom objects and must be adjusted before taking that fallback.
-6. Copy the printed `HUBSPOT_OBJECT_TYPE=2-...` into `.env` (blank in `.env.example`).
-7. `npm run seed` creates three example custom-object records. Check all three appear in the **test account**.
-8. `node index.js`, then visit `http://localhost:3000`. Check the table displays records and fields. Visit `http://localhost:3000/update-cobj`, create another record, and verify it appears in both HubSpot and on the homepage. Optionally test the edit feature.
-9. Copy your real list-view URL from HubSpot and replace `NOT CONFIGURED` above. Run `npm run submission:check`; complete outstanding checks.
-
-## Working branch / authentic development history
-
-Your Academy directions specifically require creating a branch, making your first **actual** development commit with the specified message, and merging the branch to main. Do not create artificial commits to pretend that work happened. Starting with your *own fork*:
-
-```bash
-git clone https://github.com/<your-account>/<your-fork>.git
-cd <your-fork>
-git branch working-branch
-git checkout working-branch
-# Make your initial real changes, then:
-git add .
-git commit -m "First commit to my Integrating With HubSpot I: Foundations practicum repository."
-# Continue development with meaningful commits while testing and correcting issues.
-git push -u origin working-branch
-# After reviewing and testing, merge working-branch into main via a GitHub PR.
-```
-
-The repository name is expected to be `<first-name>-<last-name>-iwh-i-practicum`. If your fork was created under another name, rename it under GitHub **Settings → General → Repository name**; GitHub ordinarily redirects the old repository URL.
-
-## Commands
-
-```bash
-npm install
-npm run check
-npm test
-npm run setup:schema
-npm run seed
-node index.js
-npm run submission:check
-```
-
-`npm run check` and `npm test` verify code with mocked data. They do **not** prove the real test account has the required object, contacts association, and three records. The submission checker checks code and local configuration but cannot authenticate without your credential.
-
-## API and security
-
-Authentication uses a HubSpot test-account private app token or current Service Key as a Bearer token. `.env` and `node_modules/` are ignored via `.gitignore`. Do not share credentials in screenshots, GitHub, or chat. The custom-object schema is created through `POST /crm-object-schemas/v3/schemas`, and records are accessed through `/crm/v3/objects/{objectType}`.
-
-## Submission (after live verification)
-
-Only submit a **public GitHub repository URL** in the Academy **Add link** field. Do not upload a ZIP, deployment URL, page preview, or in-app editor link. Submit the merged `main` branch after meaningful original development history and the real test-account list URL have been recorded. HubSpot grades this manually within seven business days.
-
-If you cannot create the required private app because of HubSpot's 2026 platform change, email [developerpracticums@hubspot.com](mailto:developerpracticums@hubspot.com) for current approved guidance, rather than falsely claiming to have created it.
+The custom object was created in the developer test account. Four records have been verified in both HubSpot CRM and the application, including a record submitted through the application form.
 
 ## My Practicum Project
 
-I built a Study Projects application using Node.js,
-Express, Axios, and Pug.
+I built a Study Projects application using Node.js, Express, Axios, and Pug. It connects to a HubSpot developer test account and retrieves custom-object records through HubSpot's CRM APIs.
 
-The application will integrate with HubSpot CRM using API
-requests and a custom object containing project information.
+The homepage displays records and their properties in a table. A separate form allows users to create new records, and the application redirects to the homepage after a successful API request.
 
-The homepage will display records in a table, and a separate
-form will allow users to create new records.
+I tested the application locally and confirmed that a record created through the form appeared both in the application and in HubSpot CRM.
 
-I will test the application using a HubSpot developer test
-account and document the integration in this repository.
+## Custom Object and Properties
+
+| Display label | Internal name | Type |
+|---|---|---|
+| Name | `name` | String (text), required |
+| Category | `project_category` | String (text), required |
+| Status | `project_status` | String (text) |
+| Notes | `project_notes` | String (textarea) |
+
+The custom-object schema specifies an association with **Contacts** using `associatedObjects: ['CONTACT']`. The association should also be confirmed in HubSpot's data model before submitting the practicum.
+
+The test account contains four records:
+
+- API integration checklist
+- CRM data quality review
+- Customer portal prototype
+- HubSpot CRM Integration Demo
+
+The fourth record was created through the application's form and verified in HubSpot CRM.
+
+## Required Routes and Templates
+
+| HTTP route | Template | Function |
+|---|---|---|
+| `GET /` | `views/homepage.pug` | Retrieves custom-object records using the HubSpot API and displays their properties in a table. Includes the **Add to this table** link. |
+| `GET /update-cobj` | `views/updates.pug` | Displays the record-creation form, the required page title, and the **Return to the homepage** link. |
+| `POST /update-cobj` | Redirect to homepage | Creates a record in HubSpot CRM using submitted form data and redirects to the homepage. |
+
+Optional edit routes are also included for modifying existing records.
+
+## Local Setup
+
+**Prerequisites:** Node.js, npm, Git, and a HubSpot developer test account with the required API permissions.
+
+1. Clone your GitHub fork and open the project directory.
+2. Run `npm install` to install dependencies.
+3. Copy `.env.example` to a local `.env` file.
+4. Add your HubSpot developer test-account Service Key to `HUBSPOT_ACCESS_TOKEN` in `.env`.
+5. Set `HUBSPOT_OBJECT_TYPE=2-270751630` in `.env`.
+6. Run `node index.js` or `npm start`.
+7. Open `http://localhost:3000` to view the custom-object table.
+8. Open `http://localhost:3000/update-cobj` to create a record.
+
+The project provides `npm run setup:schema` to create or inspect the custom-object schema and `npm run seed` to create three sample records. Avoid rerunning the seed script unnecessarily because it may create duplicate records.
+
+Never commit the actual `.env` file or share your API credentials.
+
+## Testing and Verification
+
+The following checks have been completed:
+
+- `npm run check` — JavaScript syntax validation passed.
+- `npm test` — All **18 automated tests passed**.
+- GitHub Actions — The checked Node.js workflow on `working-branch` completed successfully.
+- Live GET API — Successfully retrieved three custom-object records on the homepage.
+- Live POST API — Successfully created a fourth record and redirected to the homepage.
+- CRM verification — The newly created record appeared in HubSpot and in the Node.js application.
+
+The application demonstrated successful integration between Node.js and HubSpot CRM.
+
+For additional verification, run:
+
+`npm run check`
+
+`npm test`
+
+`npm run submission:check`
+
+`node index.js`
+
+Automated tests use mocked HubSpot responses and do not replace live CRM verification. The Contacts association still requires a final check in HubSpot.
+
+## API Authentication and Security
+
+The application authenticates using a HubSpot test-account Service Key sent as a Bearer token.
+
+The following permissions are configured:
+
+- `crm.schemas.custom.read`
+- `crm.schemas.custom.write`
+- `crm.objects.custom.read`
+- `crm.objects.custom.write`
+- `crm.objects.contacts.read`
+- `crm.objects.contacts.write`
+
+The HubSpot Academy instructions refer to a private app. This test account uses a Service Key because of HubSpot's changes to legacy private-app creation.
+
+The actual credential is stored locally in `.env`, which is excluded from Git tracking using `.gitignore`. No private credentials are included in the repository.
+
+## Git Workflow and Submission
+
+The practicum development was performed on `working-branch`, beginning with the first commit message required by HubSpot Academy.
+
+The application files, tests, and documentation have been committed and pushed to GitHub.
+
+Before submission, the remaining steps are to verify the Contacts association, complete the final checks, review the work for originality, and merge `working-branch` into `main`.
+
+The completed public repository should be submitted through the **Add link** field in HubSpot Academy.
+
+Do not upload a ZIP file, localhost URL, hosted-page preview, or HubSpot page-editor link.
+
+**Public GitHub repository:**
+
+https://github.com/VK-GTM/Vandankumar-Dande-iwh-i-practicum
+
+HubSpot Academy manually grades submissions, generally within seven business days.
+
+**Academic integrity:** HubSpot requires original work and reviews meaningful development history. Automated tests and a working integration alone do not establish originality. The submitted implementation should be work you have reviewed, understood, and meaningfully developed yourself.
