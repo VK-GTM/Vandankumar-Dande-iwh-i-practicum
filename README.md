@@ -6,7 +6,7 @@ A Node.js/Express app that demonstrates GET and POST calls to HubSpot's custom-o
 
 ## REQUIRED: test account and list view link
 
-**Developer test-account custom-object URL:** NOT CONFIGURED
+**Developer test-account custom-object URL:** https://app.hubspot.com/contacts/247795564/objects/2-270751630/views/all/list
 
 Replace `NOT CONFIGURED` **after creating the real object in your HubSpot developer test account** with the exact link copied from that account. The expected form is:
 
@@ -94,7 +94,7 @@ If you cannot create the required private app because of HubSpot's 2026 platform
 
 ## My Practicum Project
 
-I plan to build a Study Projects application using Node.js,
+I built a Study Projects application using Node.js,
 Express, Axios, and Pug.
 
 The application will integrate with HubSpot CRM using API
