@@ -91,3 +91,17 @@ Authentication uses a HubSpot test-account private app token or current Service 
 Only submit a **public GitHub repository URL** in the Academy **Add link** field. Do not upload a ZIP, deployment URL, page preview, or in-app editor link. Submit the merged `main` branch after meaningful original development history and the real test-account list URL have been recorded. HubSpot grades this manually within seven business days.
 
 If you cannot create the required private app because of HubSpot's 2026 platform change, email [developerpracticums@hubspot.com](mailto:developerpracticums@hubspot.com) for current approved guidance, rather than falsely claiming to have created it.
+
+## My Practicum Project
+
+I plan to build a Study Projects application using Node.js,
+Express, Axios, and Pug.
+
+The application will integrate with HubSpot CRM using API
+requests and a custom object containing project information.
+
+The homepage will display records in a table, and a separate
+form will allow users to create new records.
+
+I will test the application using a HubSpot developer test
+account and document the integration in this repository.
