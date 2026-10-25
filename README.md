@@ -8,7 +8,7 @@ The project was developed from the [official HubSpot Academy starter repository]
 
 **Study Projects custom-object list:**
 
-https://app.hubspot.com/contacts/247795564/objects/2-270751630/views/all/list
+**Developer test-account custom-object URL:** https://app.hubspot.com/contacts/247795564/objects/2-270751630/views/all/list
 
 | Detail | Value |
 |---|---|
