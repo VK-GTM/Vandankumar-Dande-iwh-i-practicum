@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  main.container.main-content
+    .error-panel
+      p.eyebrow REQUEST ERROR
+      h1= title
+      p= message
+      a.button.button-primary(href='/') Return to dashboard

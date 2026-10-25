@@ -1,0 +1,58 @@
+extends layout
+
+block content
+  main.container.main-content
+    .page-heading
+      div
+        p.eyebrow CUSTOM OBJECT DASHBOARD
+        h1 Study Projects
+        p.subheading View, create, and update records stored in your HubSpot developer test account.
+      a.button.button-primary(href='/update-cobj') Add to this table
+    if notice
+      .notice(role='status')= notice
+    .metric-row
+      .metric-card
+        span.metric-label Total projects
+        strong.metric-value= projects.length
+        span.metric-note Synced from HubSpot CRM
+      .metric-card
+        span.metric-label In progress
+        strong.metric-value= projects.filter(p => p.project_status === 'In Progress').length
+        span.metric-note Active work items
+      .metric-card
+        span.metric-label Completed
+        strong.metric-value= projects.filter(p => p.project_status === 'Completed').length
+        span.metric-note Finished work items
+    section.panel
+      .panel-heading
+        div
+          h2 All projects
+          p Live custom-object data from HubSpot
+        span.record-count #{projects.length} record(s)
+      if projects.length === 0
+        .empty-state
+          h3 No projects yet
+          p Create your first project, or run the sample seed script to populate a few example records.
+          a.button.button-primary(href='/update-cobj') Add to this table
+      else
+        .table-scroll
+          table.project-table
+            thead
+              tr
+                th Name
+                th Category
+                th Status
+                th Notes
+                th Actions
+            tbody
+              each project in projects
+                tr
+                  td
+                    strong= project.name
+                    small Record ID: #{project.id}
+                  td= project.project_category
+                  td
+                    span.status-badge(class=project.project_status === 'Completed' ? 'status-complete' : project.project_status === 'In Progress' ? 'status-progress' : 'status-planning')= project.project_status || 'Unspecified'
+                  td.notes= project.project_notes || '—'
+                  td
+                    a.text-link(href='/projects/' + project.id + '/edit') Edit
