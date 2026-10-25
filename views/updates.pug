@@ -1,0 +1,34 @@
+extends layout
+
+block content
+  main.container.main-content
+    a.back-link(href='/') Return to the homepage
+    .form-header
+      p.eyebrow HUBSPOT CRM CUSTOM OBJECT
+      h1= isEdit ? 'Edit Study Project' : 'New Study Project'
+      p.subheading= isEdit ? 'Save changes to an existing HubSpot record.' : 'Create a new record in your HubSpot developer test account.'
+    .form-card
+      if errors.length
+        .error-box(role='alert')
+          strong Please fix the following:
+          ul
+            each error in errors
+              li= error
+      form(method='post' action=action)
+        .form-field
+          label(for='name') Name *
+          input#name(type='text' name='name' maxlength='120' required value=project.name || '' placeholder='e.g. CRM integration demo')
+        .form-field
+          label(for='project_category') Category *
+          input#project_category(type='text' name='project_category' maxlength='80' required value=project.project_category || '' placeholder='e.g. API Integration')
+        .form-field
+          label(for='project_status') Status *
+          select#project_status(name='project_status' required)
+            each status in statuses
+              option(value=status selected=project.project_status === status)= status
+        .form-field
+          label(for='project_notes') Notes
+          textarea#project_notes(name='project_notes' maxlength='1000' rows='5' placeholder='Add a short description...')= project.project_notes || ''
+        .form-actions
+          a.button.button-secondary(href='/') Cancel
+          button.button.button-primary(type='submit')= isEdit ? 'Save changes' : 'Create project'

@@ -1,0 +1,20 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1')
+    meta(name='description' content='Study Projects: a HubSpot custom-object integration')
+    title= title
+    link(rel='stylesheet' href='/css/style.css')
+  body
+    header.site-header
+      .container.header-inner
+        a.brand(href='/')
+          span.brand-mark HS
+          span Study Projects
+        span.header-label HubSpot API practicum
+    block content
+    footer.site-footer
+      .container
+        span Demo app using the HubSpot CRM custom-object API.
+        span Built with Node.js, Express, Axios and Pug.
